@@ -1,15 +1,11 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jewellery Shop Management System - Home</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
-<body class="from-yellow-50 to-yellow-200 min-h-screen flex flex-col">
-  <!-- Navbar -->
-  <header class="bg-white/80 shadow-lg sticky top-0 z-10">
+<body>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
       <div class="flex items-center gap-3">
         <div class="bg-yellow-400 rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold text-white shadow">JMS</div>
@@ -22,10 +18,11 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 pointer-events-none transition z-20">
-            <a href="back-end/customer_register.php" class="block px-4 py-2 hover:bg-gray-200">Customer</a>
-            <a href="back-end/jewellery_register.php" class="block px-4 py-2 hover:bg-gray-200">Jewellery Item</a>
-            <a href="back-end/order_register.php" class="block px-4 py-2 hover:bg-gray-200">Order</a>
-            <a href="back-end/payment_register.php" class="block px-4 py-2 hover:bg-gray-200">Payment</a>
+            <a href="./../index.php" class="block px-4 py-2 hover:bg-gray-200">Home</a>
+            <a href="./../back-end/customer_register.php" class="block px-4 py-2 hover:bg-gray-200">Customer</a>
+            <a href="./../back-end/jewellery_register.php" class="block px-4 py-2 hover:bg-gray-200">Jewellery Item</a>
+            <a href="./../back-end/order_register.php" class="block px-4 py-2 hover:bg-gray-200">Order</a>
+            <a href="./../back-end/payment_register.php" class="block px-4 py-2 hover:bg-gray-200">Payment</a>
           </div>
         </div>
         <!-- View Dropdown -->
@@ -34,35 +31,18 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 pointer-events-none  z-20">
-            <a href="front-end/customer.php" class="block px-4 py-2 hover:bg-gray-200">Customer</a>
-            <a href="front-end/jewellery.php" class="block px-4 py-2 hover:bg-gray-200">Jewellery Item</a>
-            <a href="front-end/order.php" class="block px-4 py-2 hover:bg-gray-200">Order</a>
-            <a href="front-end/payment.php" class="block px-4 py-2 hover:bg-gray-200">Payment</a>
+            <a href="./../index.php" class="block px-4 py-2 hover:bg-gray-200">Home</a>
+            <a href="./../front-end/customer.php" class="block px-4 py-2 hover:bg-gray-200">Customer</a>
+            <a href="./../front-end/jewellery.php" class="block px-4 py-2 hover:bg-gray-200">Jewellery Item</a>
+            <a href="./../front-end/order.php" class="block px-4 py-2 hover:bg-gray-200">Order</a>
+            <a href="./../front-end/payment.php" class="block px-4 py-2 hover:bg-gray-200">Payment</a>
           </div>
         </div>
         <!-- Search Button -->
         <a href="search.php" class="ml-2 px-4 py-2 rounded-md bg-yellow-400 text-white font-semibold shadow hover:bg-yellow-500 transition">Search</a>
       </nav>
     </div>
-  </header>
-  <!-- Hero Section -->
-  <main class="flex-1 flex flex-col items-center justify-center text-center py-16 px-4 bg-[url('./pic/background.jpg')] bg-cover bg-center bg-no-repeat">
-    <div class="max-w-2xl mx-auto">
-      <h1 class="text-4xl sm:text-5xl font-extrabold text-yellow-700 mb-4 drop-shadow">Welcome to <span class="text-yellow-500">Jewellery Shop Management System</span></h1>
-      <p class="text-lg sm:text-xl text-yellow-900 mb-8">Manage Customers, Jewellery Items, Orders, Payments, and Authenticity Certificates in one clean and elegant system.</p>
-      <div class="flex flex-wrap justify-center gap-4 mt-6">
-        <a href="back-end/customer_register.php" class="px-6 py-3 rounded-lg bg-yellow-400 text-white font-bold shadow hover:bg-yellow-500 transition">Register Customer</a>
-        <a href="back-end/jewellery_register.php" class="px-6 py-3 rounded-lg bg-yellow-300 text-yellow-900 font-bold shadow hover:bg-yellow-400 transition">Register Jewellery</a>
-        <a href="back-end/order_register.php" class="px-6 py-3 rounded-lg bg-yellow-200 text-yellow-900 font-bold shadow hover:bg-yellow-300 transition">Register Order</a>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-yellow-100 text-yellow-800 py-6 mt-auto shadow-inner">
-    <?php include 'footer.php'; ?>
-  </footer>
-    <script>
+     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.group').forEach(function (group) {
                 const button = group.querySelector('button');
