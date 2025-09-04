@@ -19,8 +19,9 @@
           </button>
           <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 pointer-events-none transition z-20">
             <a href="./../index.php" class="block px-4 py-2 hover:bg-gray-200">Home</a>
+            <a href="./../back-end/employee_regi.php" class="block px-4 py-2 hover:bg-gray-200">Employee</a>
             <a href="./../back-end/customer_register.php" class="block px-4 py-2 hover:bg-gray-200">Customer</a>
-            <a href="./../back-end/jewellery_register.php" class="block px-4 py-2 hover:bg-gray-200">Jewellery Item</a>
+            <a href="./../back-end/jewellery_register.php" class="block px-4 py-2 hover:bg-gray-200">Item</a>
             <a href="./../back-end/order_register.php" class="block px-4 py-2 hover:bg-gray-200">Order</a>
             <a href="./../back-end/payment_register.php" class="block px-4 py-2 hover:bg-gray-200">Payment</a>
           </div>
@@ -32,8 +33,9 @@
           </button>
           <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 pointer-events-none  z-20">
             <a href="./../index.php" class="block px-4 py-2 hover:bg-gray-200">Home</a>
+            <a href="employee.php" class="block px-4 py-2 hover:bg-gray-200">Employee</a>
             <a href="customer.php" class="block px-4 py-2 hover:bg-gray-200">Customer</a>
-            <a href="jewellery.php" class="block px-4 py-2 hover:bg-gray-200">Jewellery Item</a>
+            <a href="jewellery.php" class="block px-4 py-2 hover:bg-gray-200">Item</a>
             <a href="order.php" class="block px-4 py-2 hover:bg-gray-200">Order</a>
             <a href="payment.php" class="block px-4 py-2 hover:bg-gray-200">Payment</a>
           </div>

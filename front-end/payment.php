@@ -1,3 +1,20 @@
+
+<?php
+include './../db_connection.php';
+
+function getPaymentList($conn) {
+    $sql = "SELECT * FROM Payment";
+    $result = $conn->query($sql);
+    $payments = [];
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $payments[] = $row;
+        }
+    }
+    return $payments;
+}
+$payments = getPaymentList($conn);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,14 +33,33 @@
       <table class="min-w-full text-sm text-left text-yellow-900">
         <thead class="bg-yellow-200 text-yellow-800 uppercase text-xs">
           <tr>
-            <th class="px-6 py-3">Payment ID</th>
-            <th class="px-6 py-3">Order ID</th>
-            <th class="px-6 py-3">Payment Mode</th>
-            <th class="px-6 py-3">Payment Status</th>
+            <th class="px-6 py-3 border">Payment ID</th>
+            <th class="px-6 py-3 border">Order ID</th>
+            <th class="px-6 py-3 border">Payment Date</th>
+            <th class="px-6 py-3 border">Payment Status</th>
+            <th class="px-6 py-3 border">Actions</th>
+            <th class="px-6 py-3 border">Receipt</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-yellow-100">
-          <!-- Empty for now -->
+          <?php foreach ($payments as $payment): ?>
+            <tr>
+              <td class="px-6 py-4 border"><?= htmlspecialchars($payment['Payment_ID']) ?></td>
+              <td class="px-6 py-4 border"><?= htmlspecialchars($payment['Order_ID']) ?></td>
+              <td class="px-6 py-4 border"><?= htmlspecialchars($payment['payment_date']) ?></td>
+              <td class="px-6 py-4 border"><?= htmlspecialchars($payment['Payment_Status']) ?></td>
+              <td class="px-6 py-4 border flex gap-4">
+                <a href="edit_payment.php?id=<?= $payment['Payment_ID'] ?>" class="text-yellow-600 hover:underline">Edit</a>
+                <form method="POST" action="delete_payment.php" class="inline">
+                  <input type="hidden" name="id" value="<?= $payment['Payment_ID'] ?>" />
+                  <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                </form>
+              </td>
+              <td class="px-6 py-4 border">
+                <a href="generate_receipt.php?id=<?= $payment['Payment_ID'] ?>" class="text-blue-600 hover:underline">PDF</a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </div>

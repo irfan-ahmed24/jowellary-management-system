@@ -5,14 +5,17 @@ $message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $item_id = $_POST['Item_ID'];
     $type = $_POST['Type'];
+    $item_name = $_POST['Item_name'];
     $weight = $_POST['Weight'];
     $price = $_POST['Price'];
 
-    if ($item_id && $type && $weight && $price) {
-        $stmt = $conn->prepare("INSERT INTO Jewellery_Item (Item_ID, Type, Weight, Price) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssdd", $item_id, $type, $weight, $price);
+    if ($item_id && $type && $item_name && $weight && $price) {
+        $stmt = $conn->prepare("INSERT INTO Jewellery_Item (Item_ID, Type, Item_name, Weight, Price) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssd", $item_id, $type, $item_name, $weight, $price);
         if ($stmt->execute()) {
             $message = "Jewellery item registered successfully!";
+            header("Location: ./../front-end/jewellery.php");
+            exit();
         } else {
             $message = "Error: Could not register jewellery item.";
         }
@@ -46,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form method="POST" action="" class="flex flex-col gap-4">
       <input type="text" name="Item_ID" placeholder="Item ID" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
       <input type="text" name="Type" placeholder="Type" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+      <input type="text" name="Item_name" placeholder="Item Name" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
       <input type="number" step="0.01" name="Weight" placeholder="Weight (e.g., 15.5)" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
       <input type="number" step="0.01" name="Price" placeholder="Price" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
       <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 rounded-md transition">Submit</button>

@@ -1,25 +1,25 @@
 <?php
 include './../db_connection.php'; // Make sure this file connects to your database
 $show_table = false;
-// View all customers
-function getAllCustomers($conn) {
-    $sql = "SELECT * FROM Customer";
+// View all employees
+function getAllEmployees($conn) {
+    $sql = "SELECT * FROM Employee";
     $result = $conn->query($sql);
-    $customers = [];
+    $employees = [];
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $customers[] = $row;
+            $employees[] = $row;
         }
     }
-    return $customers;
+    return $employees;
 }
 
-// Search customers
+// Search employees
 $search_message = "";
 $search_results = [];
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $search_term = $conn->real_escape_string($_GET['search']);
-    $sql = "SELECT * FROM Customer WHERE Customer_ID LIKE '%$search_term%' OR Name LIKE '%$search_term%' OR Contact LIKE '%$search_term%'";
+    $sql = "SELECT * FROM Employee WHERE Employee_ID LIKE '%$search_term%' OR employee_name LIKE '%$search_term%' OR number LIKE '%$search_term%'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -30,22 +30,22 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
     }
 }
 
-// Update customer
+// Update employees
 $update_message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
-    $id = $_POST['Customer_ID'];
-    $name = $_POST['Name'];
-    $contact = $_POST['Contact'];
+    $id = $_POST['Employee_ID'];
+    $name = $_POST['employee_name'];
+    $contact = $_POST['number'];
     
     if ($id && $name && $contact) {
-        $stmt = $conn->prepare("UPDATE Customer SET Name=?, Contact=? WHERE Customer_ID=?");
+        $stmt = $conn->prepare("UPDATE Employee SET employee_name=?, number=? WHERE Employee_ID=?");
         $stmt->bind_param("sss", $name, $contact, $id);
         if ($stmt->execute()) {
-            $update_message = "Customer updated successfully!";
-            header("Location: ./customer.php");
+            $update_message = "Employee updated successfully!";
+            header("Location: ./employee.php");
             exit();
         } else {
-            $update_message = "Error: Could not update customer.";
+            $update_message = "Error: Could not update employee.";
         }
         $stmt->close();
     } else {
@@ -53,27 +53,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
     }
 }
 
-// Delete customer
+// Delete employees
 $delete_message = "";
 if (isset($_GET['delete'])) {
     $id = $conn->real_escape_string($_GET['delete']);
-    $stmt = $conn->prepare("DELETE FROM Customer WHERE Customer_ID=?");
+    $stmt = $conn->prepare("DELETE FROM Employee WHERE Employee_ID=?");
     $stmt->bind_param("s", $id);
     if ($stmt->execute()) {
-        $delete_message = "Customer deleted successfully!";
+        $delete_message = "Employee deleted successfully!";
+        header("Location: ./employee.php");
+        exit();
     } else {
-        $delete_message = "Error: Could not delete customer.";
+        $delete_message = "Error: Could not delete employee.";
     }
     $stmt->close();
 }
 
-$customers = getAllCustomers($conn);
+$employees = getAllEmployees($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Customer</title>
+  <title>Employees</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-200 flex flex-col justify-between">
@@ -83,7 +85,7 @@ $customers = getAllCustomers($conn);
   </header>
 <main class="flex-1 flex flex-col items-center justify-center py-10">
   <div class="container mx-auto bg-white/90 rounded-xl shadow-lg p-8">
-    <h2 class="text-3xl font-bold text-yellow-700 mb-6 text-center drop-shadow">Customer List</h2>
+    <h2 class="text-3xl font-bold text-yellow-700 mb-6 text-center drop-shadow">Employee List</h2>
      <!-- Search Form -->
       <div class="flex justify-start mb-2 w-1/3">
         <form class="flex items-center rounded-lg py-2 gap-2 w-full" method="GET" action="">
@@ -120,21 +122,21 @@ $customers = getAllCustomers($conn);
           <table class="min-w-full text-sm text-left text-yellow-900">
             <thead class="bg-yellow-200 text-yellow-800 uppercase text-xs">
               <tr>
-                <th class="px-6 py-3 border">Customer ID</th>
-                <th class="px-6 py-3 border">Name</th>
+                <th class="px-6 py-3 border">Employee ID</th>
+                <th class="px-6 py-3 border">Employee Name</th>
                 <th class="px-6 py-3 border">Contact</th>
                 <th class="px-6 py-3 border">Actions</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-yellow-100">
-              <?php foreach($search_results as $customer): ?>
+              <?php foreach($search_results as $employee): ?>
                 <tr>
-                  <td class="px-6 py-2 border"><?= htmlspecialchars($customer['Customer_ID']) ?></td>
-                  <td class="px-6 py-2 border"><?= htmlspecialchars($customer['Name']) ?></td>
-                  <td class="px-6 py-2 border"><?= htmlspecialchars($customer['Contact']) ?></td>
+                  <td class="px-6 py-2 border"><?= htmlspecialchars($employee['employee_id']) ?></td>
+                  <td class="px-6 py-2 border"><?= htmlspecialchars($employee['employee_name']) ?></td>
+                  <td class="px-6 py-2 border"><?= htmlspecialchars($employee['number']) ?></td>
                   <td class="px-6 py-2 border">
-                    <a href="?edit=<?= htmlspecialchars($customer['Customer_ID']) ?>" class="text-yellow-700 hover:underline mr-3">Edit</a>
-                    <a href="?delete=<?= htmlspecialchars($customer['Customer_ID']) ?>" onclick="return confirm('Are you sure you want to delete this customer?')" class="text-red-600 hover:underline">Delete</a>
+                    <a href="?edit=<?= htmlspecialchars($employee['employee_id']) ?>" class="text-yellow-700 hover:underline mr-3">Edit</a>
+                    <a href="?delete=<?= htmlspecialchars($employee['employee_id']) ?>" onclick="return confirm('Are you sure you want to delete this employee?')" class="text-red-600 hover:underline">Delete</a>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -171,15 +173,15 @@ $customers = getAllCustomers($conn);
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-yellow-100">
-             <?php foreach($customers as $index => $customer): ?>
+             <?php foreach($employees as $index => $employee): ?>
               <tr>
               <td class="px-6 border py-2"><?= $index + 1 ?></td>
-              <td class="px-6 border py-2"><?= htmlspecialchars($customer['Customer_ID']) ?></td>
-              <td class="px-6 border py-2"><?= htmlspecialchars($customer['Name']) ?></td>
-              <td class="px-6 border py-2"><?= htmlspecialchars($customer['Contact']) ?></td>
+              <td class="px-6 border py-2"><?= htmlspecialchars($employee['employee_id']) ?></td>
+              <td class="px-6 border py-2"><?= htmlspecialchars($employee['employee_name']) ?></td>
+              <td class="px-6 border py-2"><?= htmlspecialchars($employee['number']) ?></td>
               <td class="px-6 py-2 border">
-                <a href="?edit=<?= htmlspecialchars($customer['Customer_ID']) ?>" class="text-yellow-700 hover:underline mr-3">Edit</a>
-                <a href="?delete=<?= htmlspecialchars($customer['Customer_ID']) ?>" onclick="return confirm('Are you sure you want to delete this customer?')" class="text-red-600 hover:underline">Delete</a>
+                <a href="?edit=<?= htmlspecialchars($employee['employee_id']) ?>" class="text-yellow-700 hover:underline mr-3">Edit</a>
+                <a href="?delete=<?= htmlspecialchars($employee['employee_id']) ?>" onclick="return confirm('Are you sure you want to delete this employee?')" class="text-red-600 hover:underline">Delete</a>
               </td>
               </tr>
             <?php endforeach; ?>

@@ -3,16 +3,17 @@ include './../db_connection.php';
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $payment_id = $_POST['Payment_ID'];
     $order_id = $_POST['Order_ID'];
-    $amount = $_POST['Amount'];
     $payment_date = $_POST['Payment_Date'];
+    $payment_status = $_POST['payment_status'];
 
-    if ($payment_id && $order_id && $amount && $payment_date) {
-        $stmt = $conn->prepare("INSERT INTO Payment (Payment_ID, Order_ID, Amount, Payment_Date) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssds", $payment_id, $order_id, $amount, $payment_date);
+    if ($order_id && $payment_date) {
+        $stmt = $conn->prepare("INSERT INTO Payment (Order_ID, Payment_Date, Payment_Status) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $order_id, $payment_date, $payment_status);
         if ($stmt->execute()) {
             $message = "Payment registered successfully!";
+            header("location: ./../front-end/payment.php");
+            exit();
         } else {
             $message = "Error: Could not register payment.";
         }
@@ -44,9 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     <?php endif; ?>
     <form method="POST" action="" class="flex flex-col gap-4">
-      <input type="text" name="Payment_ID" placeholder="Payment ID" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+     
       <input type="text" name="Order_ID" placeholder="Order ID" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
-      <input type="number" step="0.01" name="Amount" placeholder="Amount" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+      <select name="payment_status" id="payment_status" class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+        <option value="completed" selected>Yes</option>
+        <option value="pending">No</option>
+      </select>
       <input type="date" name="Payment_Date" placeholder="Payment Date" required class="rounded-md border border-yellow-200 px-4 py-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
       <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 rounded-md transition">Submit</button>
     </form>
