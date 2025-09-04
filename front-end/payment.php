@@ -56,7 +56,7 @@ $payments = getPaymentList($conn);
                 </form>
               </td>
               <td class="px-6 py-4 border">
-                <a href="generate_receipt.php?id=<?= $payment['Payment_ID'] ?>" class="text-blue-600 hover:underline">PDF</a>
+                <a href="./../back-end/PDF.php?id=<?= $payment['Payment_ID'] ?>" class="text-blue-600 hover:underline">PDF</a>
               </td>
             </tr>
           <?php endforeach; ?>

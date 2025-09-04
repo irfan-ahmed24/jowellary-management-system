@@ -14,6 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sss", $id, $name, $contact);
         if ($stmt->execute()) {
             $message = "Customer registered successfully!";
+            header("location: ./../front-end/customer.php");
+            exit();
         } else {
             $message = "Error: Could not register customer.";
         }

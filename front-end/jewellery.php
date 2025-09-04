@@ -37,21 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
         $update_message = "Please fill in all fields.";
     }
 }
-// Delete jewellery item
-$delete_message = "";
-if (isset($_GET['delete'])) {
-    $id = $conn->real_escape_string($_GET['delete']);
-    $stmt = $conn->prepare("DELETE FROM Jewellery_Item WHERE Item_ID=?");
-    $stmt->bind_param("s", $id);
-    if ($stmt->execute()) {
-        $delete_message = "Jewellery item deleted successfully!";
-        header("Location: ./../front-end/jewellery.php");
-        exit();
-    } else {
-        $delete_message = "Error: Could not delete jewellery item.";
-    }
-    $stmt->close();
-}
 
 $jewellery_items = getAllJewelleryItems($conn);
 
@@ -82,10 +67,19 @@ $jewellery_items = getAllJewelleryItems($conn);
           $stmt->close();
       ?>
         <form class="max-w-md mx-auto mb-6 bg-yellow-50 rounded-lg shadow p-6 flex flex-col gap-4" method="POST" action="">
+          <label for="Item_ID">Item ID</label>
           <input type="text" name="Item_ID" value="<?= $edit_item ? htmlspecialchars($edit_item['Item_ID']) : '' ?>" readonly class="rounded-md border border-yellow-200 px-4 py-2 bg-gray-100" />
+
+          <label for="Type">Type</label>
           <input type="text" name="Type" value="<?= $edit_item ? htmlspecialchars($edit_item['Type']) : '' ?>" required class="rounded-md border border-yellow-200 px-4 py-2" />
+
+          <label for="Item_name">Name</label>
           <input type="text" name="Item_name" value="<?= $edit_item ? htmlspecialchars($edit_item['Item_name']) : '' ?>" required class="rounded-md border border-yellow-200 px-4 py-2" />
+
+          <label for="Weight">Weight</label>
           <input type="text" name="Weight" value="<?= $edit_item ? htmlspecialchars($edit_item['Weight']) : '' ?>" required class="rounded-md border border-yellow-200 px-4 py-2" />
+
+          <label for="Price">Price</label>
           <input type="text" name="Price" value="<?= $edit_item ? htmlspecialchars($edit_item['Price']) : '' ?>" required class="rounded-md border border-yellow-200 px-4 py-2" />
           <button type="submit" name="update" class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 rounded-md transition">Update</button>
         </form>
@@ -112,7 +106,6 @@ $jewellery_items = getAllJewelleryItems($conn);
                     <td class="px-6 py-2 border"><?= htmlspecialchars($item["Price"]) ?></td>
                     <td class="px-6 py-2 border">
                       <a href="?edit=<?= htmlspecialchars($item['Item_ID']) ?>" class="text-yellow-700 hover:underline mr-3">Edit</a>
-                      <a href="?delete=<?= htmlspecialchars($item['Item_ID']) ?>" onclick="return confirm('Are you sure you want to delete this jewellery item?')" class="text-red-600 hover:underline">Delete</a>
                     </td>
                   </tr>
               <?php endforeach; ?>

@@ -166,7 +166,7 @@ $employees = getAllEmployees($conn);
         <thead class="bg-yellow-200 text-yellow-800 uppercase text-xs">
           <tr>
             <th class="px-6 py-3 border">SI</th>
-            <th class="px-6 py-3 border">Customer ID</th>
+            <th class="px-6 py-3 border">Employee ID</th>
             <th class="px-6 py-3 border">Name</th>
             <th class="px-6 py-3 border">Contact</th>
             <th class="px-6 py-3 border">Actions</th>
